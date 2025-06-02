@@ -116,8 +116,10 @@ function archive_email(email_id, email_archived){
     body : JSON.stringify({
       archived : !(email_archived)
     })
+  }).then(()=>{
+    load_mailbox("inbox");
   });
-  load_mailbox("inbox");
+
 }
 
 function load_mailbox(mailbox) {
@@ -163,7 +165,7 @@ function load_mailbox(mailbox) {
           });
 
 
-          emailDiv.className = "inbox-email-item";  
+          emailDiv.className = "email-item";  
           emailDiv.style.border = "1px solid #ccc";
           emailDiv.style.padding = "10px";
           emailDiv.style.marginBottom = "10px";
@@ -200,7 +202,7 @@ function load_mailbox(mailbox) {
 
       emails.forEach(email => {
         const emailDiv = document.createElement("div");
-        emailDiv.className = "sent-email-item";
+        emailDiv.className = "email-item";
         emailDiv.style.border = "1px solid #ccc"
         emailDiv.style.padding = "10px";
         emailDiv.style.marginBottom = "10px";
@@ -275,12 +277,12 @@ function load_mailbox(mailbox) {
         archiveIcon.src = archiveImage.dataset.archiveUrl; 
 
         archiveIcon.addEventListener("click", (event) =>{
-          archive_email(email.id, email.archived);
-          event.stopPropagation(); 
+          archive_email(email.id, email.archived)
+          event.stopPropagation();
         });
 
 
-        emailDiv.className = "archive-email-item";
+        emailDiv.className = "email-item";
         emailDiv.style.border = "1px solid #ccc"
         emailDiv.style.padding = "10px";
         emailDiv.style.marginBottom = "10px";
