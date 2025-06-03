@@ -37,3 +37,14 @@ textarea {
 body {
     padding-bottom: 50px;
 }
+
+#not-archive-star:hover{
+    color: #FFD43B;
+}
+    
+#archive-star{
+    color: #FFD43B;
+}
+#archive-star:hover{
+    color: #ceab2d;
+}

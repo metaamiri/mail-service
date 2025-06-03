@@ -147,17 +147,16 @@ function load_mailbox(mailbox) {
           return;
         }
   
-        // ساختن div برای هر ایمیل
+
         emails.forEach(email => {
           const emailDiv = document.createElement("div");
-          const archiveIcon = document.createElement("img");
-          const archiveImage = document.querySelector("#archiveImage");
+          const archiveIcon = document.createElement("i");
 
-          archiveIcon.className = "inbox-archive-icon";
-          archiveIcon.style.width = "20px";
+          archiveIcon.className = "fa-regular fa-star fa-lg";
+          archiveIcon.id = "not-archive-star"
           archiveIcon.style.float = "right";
           archiveIcon.style.marginRight = "5px";
-          archiveIcon.src = archiveImage.dataset.archiveUrl; 
+          // archiveIcon.src = archiveImage.dataset.archiveUrl; //getting dataset should be camelCase
 
           archiveIcon.addEventListener("click", (event) =>{
             archive_email(email.id, email.archived);
@@ -267,14 +266,13 @@ function load_mailbox(mailbox) {
 
       emails.forEach(email => {
         const emailDiv = document.createElement("div");
-        const archiveIcon = document.createElement("img");
-        const archiveImage = document.querySelector("#archiveImage");
-
-        archiveIcon.className = "inbox-archive-icon";
-        archiveIcon.style.width = "20px";
+        const archiveIcon = document.createElement("i");
+        
+        archiveIcon.className = "fa-solid fa-star fa-lg";
+        archiveIcon.id = "archive-star"
         archiveIcon.style.float = "right";
         archiveIcon.style.marginRight = "5px";
-        archiveIcon.src = archiveImage.dataset.archiveUrl; 
+        // archiveIcon.src = archiveImage.dataset.archiveUrl; 
 
         archiveIcon.addEventListener("click", (event) =>{
           archive_email(email.id, email.archived)
