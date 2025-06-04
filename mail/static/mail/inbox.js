@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
   load_mailbox('inbox');
 });
 
-function compose_email() {
+function compose_email(recipient = "", subject = "", body = "") {
 
   // Show compose view and hide other views
   document.querySelector('#emails-view').style.display = 'none';
@@ -18,9 +18,9 @@ function compose_email() {
   document.querySelector('#compose-view').style.display = 'block';
 
   // Clear out composition fields
-  document.querySelector('#compose-recipients').value = '';
-  document.querySelector('#compose-subject').value = '';
-  document.querySelector('#compose-body').value = '';
+  document.querySelector('#compose-recipients').value = recipient;
+  document.querySelector('#compose-subject').value = subject;
+  document.querySelector('#compose-body').value = body;
 
   const form = document.querySelector('#compose-form');
 
@@ -89,24 +89,31 @@ function load_email(email_id){
     replyButton.style.display = "inline-block";
     replyButton.style.marginTop = "-10px";
 
+
+    replyButton.addEventListener('click',()=>{
+      const subject = email.subject.startsWith("Re:") ? email.subject : "Re: " + email.subject;
+      const body = `\n\nOn ${email.timestamp}, ${email.sender} wrote:\n${email.body}`;
+      compose_email(email.sender, subject, body);
+    });
+
     let email_recipients = '';
-      let i = (email.recipients.length).valueOf() - 1;
-      email.recipients.forEach(recipient =>{
-        if(i >= 1){
-          email_recipients += recipient+", ";
-          
-        }
-        else{
-          email_recipients += recipient;
-        }
-        i--;
-      });
+    let i = (email.recipients.length).valueOf() - 1;
+    email.recipients.forEach(recipient =>{
+      if(i >= 1){
+        email_recipients += recipient+", ";
+        
+      }
+      else{
+        email_recipients += recipient;
+      }
+      i--;
+    });
 
     emailDiv.innerHTML = `
       <strong>From :</strong> ${email.sender} <br>
       <strong>To :</strong> ${email_recipients} <br>
       <strong>Subject:</strong> ${email.subject} <br>
-      <p>${email.body}</p>
+      <textarea class="form-control" id="compose-body">${email.body}</textarea>
       <small>${email.timestamp}</small>
     `;
 
