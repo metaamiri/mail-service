@@ -75,6 +75,7 @@ function load_email(email_id){
     view.innerHTML ='';
     const emailDiv = document.createElement("div");
     const replyButton = document.createElement("button");
+    const emailBody = document.createElement("textarea");
 
     emailDiv.className = "email-item-content";
     emailDiv.style.border = "1px solid #ccc";
@@ -89,6 +90,18 @@ function load_email(email_id){
     replyButton.style.display = "inline-block";
     replyButton.style.marginTop = "-10px";
 
+    emailBody.className = "form-control";
+    emailBody.style.border = "none";
+    emailBody.style.padding = "0";
+    emailBody.style.backgroundColor = email.read ? "#f0f0f0" : "white";
+    emailBody.innerHTML = email.body;
+    emailBody.style.boxSizing = "border-box";
+    emailBody.style.overflow = "hidden";
+    emailBody.disabled = true;
+    emailBody.style.resize = "none";
+    emailBody.style.height = "auto"; 
+    emailBody.style.height = emailBody.scrollHeight + "px"; 
+    
 
     replyButton.addEventListener('click',()=>{
       const subject = email.subject.startsWith("Re:") ? email.subject : "Re: " + email.subject;
@@ -112,11 +125,10 @@ function load_email(email_id){
     emailDiv.innerHTML = `
       <strong>From :</strong> ${email.sender} <br>
       <strong>To :</strong> ${email_recipients} <br>
-      <strong>Subject:</strong> ${email.subject} <br>
-      <textarea class="form-control" id="compose-body">${email.body}</textarea>
-      <small>${email.timestamp}</small>
-    `;
-
+      <strong>Subject:</strong> ${email.subject} <br>`;
+    emailDiv.appendChild(emailBody);
+    emailDiv.innerHTML += `<br><small>${email.timestamp}</small>`;
+    
     emailDiv.appendChild(replyButton);
     view.appendChild(emailDiv);
   }).then(()=>{
