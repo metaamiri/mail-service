@@ -59,11 +59,7 @@ function compose_email() {
 }
 
 function load_email(email_id){
-  // show the email content and hide other views
-  document.querySelector('#emails-view').style.display = 'none';
-  document.querySelector("#email-content").style.display = 'block';
-  document.querySelector('#compose-view').style.display = 'none';
-
+  
   const view = document.querySelector("#email-content");
 
   fetch(`/emails/${email_id}`,{
@@ -77,13 +73,21 @@ function load_email(email_id){
   .then(response => response.json())
   .then(email => {
     view.innerHTML ='';
-
     const emailDiv = document.createElement("div");
+    const replyButton = document.createElement("button");
+
     emailDiv.className = "email-item-content";
     emailDiv.style.border = "1px solid #ccc";
     emailDiv.style.padding = "10px";
     emailDiv.style.marginBottom = "10px";
     emailDiv.style.backgroundColor = email.read ? "#f0f0f0" : "white";
+
+    replyButton.className = "btn btn-primary";
+    replyButton.type = "button";
+    replyButton.innerText = "reply";
+    replyButton.style.float = "right";
+    replyButton.style.display = "inline-block";
+    replyButton.style.marginTop = "-10px";
 
     let email_recipients = '';
       let i = (email.recipients.length).valueOf() - 1;
@@ -106,7 +110,13 @@ function load_email(email_id){
       <small>${email.timestamp}</small>
     `;
 
+    emailDiv.appendChild(replyButton);
     view.appendChild(emailDiv);
+  }).then(()=>{
+    // show the email content and hide other views
+    document.querySelector('#emails-view').style.display = 'none';
+    document.querySelector("#email-content").style.display = 'block';
+    document.querySelector('#compose-view').style.display = 'none';
   });
 }
 
