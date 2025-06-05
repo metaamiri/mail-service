@@ -1,5 +1,5 @@
-git rm --cached mail/test.html
-git rm --cached mail/icons.html
+git rm --cached mail/templates/mail/test.html
+git rm --cached mail/templates/mail/icons.html
 
-mail/test.html
-mail/icons.html
+mail/templates/mail/test.html
+mail/templates/mail/icons.html
