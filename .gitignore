@@ -1,0 +1,5 @@
+git rm --cached mail/test.html
+git rm --cached mail/icons.html
+
+mail/test.html
+mail/icons.html
