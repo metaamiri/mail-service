@@ -21,7 +21,7 @@ This is a single-page mail service application built using Django, JavaScript, H
 1. **Clone the repository:**
    ````bash
    git clone https://github.com/metaamiri/mail-service.git
-   cd mail-service```
+   cd mail-service
    ````
 2. **install dependencies**:
    ```bash
