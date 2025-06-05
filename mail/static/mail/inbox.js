@@ -58,7 +58,7 @@ function compose_email(recipient = "", subject = "", body = "") {
   }
 }
 
-function load_email(email_id){
+function load_email(email_id, sentMailbox=false){
   
   const view = document.querySelector("#email-content");
 
@@ -95,13 +95,12 @@ function load_email(email_id){
     emailBody.style.padding = "0";
     emailBody.style.backgroundColor = email.read ? "#f0f0f0" : "white";
     emailBody.innerHTML = email.body;
-    emailBody.style.boxSizing = "border-box";
     emailBody.style.overflow = "hidden";
     emailBody.disabled = true;
     emailBody.style.resize = "none";
     emailBody.style.height = "auto"; 
     emailBody.style.height = emailBody.scrollHeight + "px"; 
-    
+    emailBody.style.minHeight = "100px";
 
     replyButton.addEventListener('click',()=>{
       const subject = email.subject.startsWith("Re:") ? email.subject : "Re: " + email.subject;
@@ -128,8 +127,9 @@ function load_email(email_id){
       <strong>Subject:</strong> ${email.subject} <br>`;
     emailDiv.appendChild(emailBody);
     emailDiv.innerHTML += `<br><small>${email.timestamp}</small>`;
-    
-    emailDiv.appendChild(replyButton);
+    if(!sentMailbox){
+      emailDiv.appendChild(replyButton);
+    }
     view.appendChild(emailDiv);
   }).then(()=>{
     // show the email content and hide other views
@@ -275,7 +275,7 @@ function load_mailbox(mailbox) {
         `;
 
         emailDiv.addEventListener("click", () => {
-            load_email(email.id); 
+            load_email(email.id, true); 
         });
 
         view.appendChild(emailDiv);
