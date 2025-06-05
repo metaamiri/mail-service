@@ -90,17 +90,16 @@ function load_email(email_id, sentMailbox=false){
     replyButton.style.display = "inline-block";
     replyButton.style.marginTop = "-10px";
 
-    emailBody.className = "form-control";
+    emailBody.className = "auto-growth";
     emailBody.style.border = "none";
     emailBody.style.padding = "0";
     emailBody.style.backgroundColor = email.read ? "#f0f0f0" : "white";
-    emailBody.innerHTML = email.body;
-    emailBody.style.overflow = "hidden";
     emailBody.disabled = true;
+    emailBody.style.width = "100%"; 
     emailBody.style.resize = "none";
-    emailBody.style.height = "auto"; 
-    emailBody.style.height = emailBody.scrollHeight + "px"; 
+    emailBody.value = email.body;
     emailBody.style.minHeight = "100px";
+    
 
     replyButton.addEventListener('click',()=>{
       const subject = email.subject.startsWith("Re:") ? email.subject : "Re: " + email.subject;
@@ -126,7 +125,15 @@ function load_email(email_id, sentMailbox=false){
       <strong>To :</strong> ${email_recipients} <br>
       <strong>Subject:</strong> ${email.subject} <br>`;
     emailDiv.appendChild(emailBody);
-    emailDiv.innerHTML += `<br><small>${email.timestamp}</small>`;
+    
+    requestAnimationFrame(() => {
+      emailBody.style.height = "auto";
+      emailBody.style.height = emailBody.scrollHeight + "px";
+    });
+    const timestamp = document.createElement("small");
+    timestamp.textContent = email.timestamp;
+    emailDiv.appendChild(timestamp);
+
     if(!sentMailbox){
       emailDiv.appendChild(replyButton);
     }
